@@ -18,8 +18,6 @@ const getRate = () => {
   const position = Direction.orient(Move.getPosition());
   const base = Layout.sliderSize();
   const rate = position / base + 1 / splide.length;
-  console.log(position, Layout.slideSize(), Layout.sliderSize());
-
   return rate;
 };
 
