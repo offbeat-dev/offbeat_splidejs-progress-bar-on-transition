@@ -2,8 +2,13 @@ import './style.css';
 import '@splidejs/splide/css';
 import Splide from '@splidejs/splide';
 
-const splide = new Splide('.splide', {
-  speed: 1500,
+const dom = {
+  splide: document.querySelector('.splide'),
+};
+
+const splide = new Splide(dom.splide, {
+  speed: 2000,
+  type: 'loop',
 });
 const bar = document.querySelector('.my-slider-progress-bar');
 
@@ -14,10 +19,13 @@ splide.on('mounted', () => {
 });
 
 const getRate = () => {
-  const { Layout, Move, Direction } = splide.Components;
+  const { Layout, Move, Direction, Slides } = splide.Components;
   const position = Direction.orient(Move.getPosition());
   const base = Layout.sliderSize();
-  const rate = position / base + 1 / splide.length;
+  let rate = 0;
+  if (splide.options.type === 'loop')
+    rate = Math.abs(Math.abs(position / base) - 1 / Slides.get(true).length);
+  else rate = position / base + 1 / splide.length;
   return rate;
 };
 
